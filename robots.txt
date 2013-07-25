@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://practicaldata.github.io/blog/sitemap.xml 
