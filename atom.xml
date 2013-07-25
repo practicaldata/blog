@@ -4,7 +4,7 @@
   <title><![CDATA[Practical Data]]></title>
   <link href="http://practicaldata.github.io/blog/atom.xml" rel="self"/>
   <link href="http://practicaldata.github.io/blog/"/>
-  <updated>2013-07-25T21:43:08+00:00</updated>
+  <updated>2013-07-25T21:59:50+00:00</updated>
   <id>http://practicaldata.github.io/blog/</id>
   <author>
     <name><![CDATA[Werner and DeGangi]]></name>
@@ -12,5 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[welcome]]></title>
+    <link href="http://practicaldata.github.io/blog/blog/2013/07/25/welcome/"/>
+    <updated>2013-07-25T21:54:00+00:00</updated>
+    <id>http://practicaldata.github.io/blog/blog/2013/07/25/welcome</id>
+    <content type="html"><![CDATA[<p>Welcome to the inaugural post of our blog on data and engineering.  Stay tuned for more.</p>
+
+<ul>
+<li>Tony and Drew</li>
+</ul>
+
+]]></content>
+  </entry>
   
 </feed>
