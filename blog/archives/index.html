@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <title>Blog Archive - Practical Data</title>
-  <meta name="author" content="Werner and DeGangi">
+  <meta name="author" content="Drew and Tony">
 
   
   <meta name="description" content=" Blog Archive 2013 Introduction
@@ -31,6 +31,37 @@ Jul 25 2013 Recent Posts Introduction Welcome ">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
   
   <script type="text/javascript">
@@ -145,7 +176,7 @@ Jul 25 2013 Recent Posts Introduction Welcome ">
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Werner and DeGangi -
+  Copyright &copy; 2013 - Drew and Tony -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
