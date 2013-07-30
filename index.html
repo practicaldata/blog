@@ -9,7 +9,7 @@
   <meta name="author" content="Drew and Tony">
 
   
-  <meta name="description" content="So I’m Drew, and I’m half of the practicaldata blogging pair. A bit about me: I’m a math and physics guy who most recently spent time at a &hellip;">
+  <meta name="description" content="Let me start this party by talking about how I think about predictive analytics problems. I’ll preface this by saying that what I’m going to describe &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,6 +108,157 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/07/29/analytics-intro/">A Simplified Model for Analytics (Part I)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T17:11:00-04:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+         | <a href="/blog/blog/2013/07/29/analytics-intro/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Let me start this party by talking about how I think about predictive analytics problems.  I’ll preface this by saying that what I’m going to describe here is stylized and <em>highly</em> simplified.  I highly urge you to take a few courses, or consult with your friendly neighborhood statistics professional, before going out and doing something wild on the basis of what you see here.  </p>
+
+<p>But I also find that a high level perspective is useful in organizing one’s thoughts.  The world of predictive analytics is broad and somewhat confusing, but there are a number of unifying concepts that can make things simpler to think about.  Generally speaking, I’ll adopt the nomenclature that’s most closely associated with “machine learning,” a discipline of computer science that is <a href="http://brenocon.com/blog/2008/12/statistics-vs-machine-learning-fight/">pretty similar to statistics</a> but expressed in language that’s more familiar to the hacker.  If you want to get bogged down in the precise definitions of these terms, there are no shortage of places on the internet where you can waste your life doing just that.</p>
+
+<p>Anyhow, I hope to answer the following basic questions in this introductory series of posts:</p>
+
+<ul>
+  <li>What Is Data?</li>
+  <li>What Do Predictive Models Do?</li>
+  <li>Why Do Predictive Models Work?</li>
+</ul>
+
+<p>I’ll assume at least a basic familiarity with probability and linear algebra.  Some statistics wouldn’t hurt either, but let’s not get ahead of ourselves.</p>
+
+<h2>What is Data?</h2>
+
+<p>A general definition of data is <a href="https://en.wikipedia.org/wiki/Data">pretty complicated to articulate</a>, but in the domain of predictive analytics, I think that one can productively think of data as anything that is unambiguously representable in digital form, i.e., as one or more numbers.  This encompasses a rich class of information, including numbers, images, words, and sounds.  To be useful for predictive purposes, raw data must be classified as belonging to one or more observations.  How this is done will depend greatly on the situation.</p>
+
+<h2>Inference From Data</h2>
+
+<p>The majority of useful analytics techniques take as given that observed data may be regarded as draws from an unknown probability distribution.  This means that while an individual draw is random, patterns in the data should emerge over many operations.  For example, take a look at some histograms representing 10, 100, 1000, and 10,000 draws from a random number generator.  As the number of samples increases, the uniformity of the distribution becomes clearer:</p>
+
+<p><img class="center" src="/blog/images/random_uniform.png" width="600" height="600" /></p>
+
+<p>Over time, a person observing the above data would become increasingly confident that he or she is observing numbers between zero and one, distributed with uniform probability, and would be able to order their life accordingly.  Put another way, by looking at data, the observer has inferred a probability distribution for the observations; if the inference is sound, then the distribution should also hold for future observations.  While this example is trivial, a large array of analytics problems can be viewed through this lens.</p>
+
+<p>In machine learning, inferential problems are generally divided into two categories: “supervised” and “unsupervised.”  Both types of inference rely on emergent patterns in data, but they differ in some fundamental respects.</p>
+
+<h4>Unsupervised Learning</h4>
+
+<p>In unsupervised learning, observed data is used to make inferences about the shape and properties of a probability distribution \(P(X)\), where \(X\) stands for some collection of variables of interest.  In many cases, the goal is simply to characterize the data in a way that is easier to work with or more comprehensible than its raw form.</p>
+
+<p>A classic problem in this area is the “clustering” problem – that is, given a set of observations, how best to divide the observations into classes in a way that arises naturally from the distribution of data.  Here’s a contrived example of three classes of data, where each pair \((x, y)\) is drawn from one of three different Gaussian distributions.  </p>
+
+<p><img class="center" src="/blog/images/clusters.png" width="600" height="600" title="&#34;Cluster data with defined labels&#34;" alt="&#34;Cluster data with defined labels&#34;" /></p>
+
+<p>Each data point is labeled in the above graph according to its “true” parent cluster.  Of course, in the real world, data doesn’t usually come with predefined labels that provide the answer.  So one potential learning task would be to reconstruct those class labels as well as possible, without knowing in advance how the points are labeled, the parameters of the random distributions from with the samples are drawn, or even how many classes there are.</p>
+
+<h4>Supervised Learning</h4>
+
+<p>In many cases, the distribution of data in the abstract doesn’t matter; rather, one or more variables are of special interest, and other observed data is useful only insofar as it can predict or explain those variables.  This is familiar realm of <em>supervised learning</em>, and it includes tools such as regression, neural networks, decision trees, support vector machines, and the like.</p>
+
+<p>Datasets in supervised learning are often described as pairs \((x_i, y_i)\) of observations, where the goal is to explain the set of observations \(y_i\) in terms of the variables \(x_i\).  Put differently, supervised learning uses data to estimate a mapping \(f: X \rightarrow Y\), where \(X\) denotes the space of potential values for input variables and \(Y\) represents the potential values for output variables.  For most input and output spaces, there are uncountably many potential mappings \(f\), and an attempt to hazard an exhaustive search through all possible functions is impossible and honestly you’d be insane to even suggest such a crazy thing.  As a result, supervised learning techniques tend to restrict the search to a defined subset of possible functions \(f\), which reduces the problem to something more tractable.</p>
+
+<p>We will probably spend most of our time talking about supervised learning techniques, though unsupervised techniques crop up with some frequency.  For instance, unsupervised learning is often used to extract features from raw data, which are then provided to a model that is trained with target data.  </p>
+
+<h2>Observations</h2>
+
+<p>Both supervised and unsupervised learning techniques incorporate the idea of an “observation.”  Because we are trafficking in the unforgiving language of mathematics, this needs to be made more precise.  I find that the the following rules apply to an appealingly large number of situations:</p>
+
+<ol>
+<li>Each observation must be a list of numbers, or it must be possible (perhaps after one or more transformations) to represent each observation as a list of numbers.</li>
+<li>Each event must have the same number of variables.</li>
+<li>Missing data is OK, provided you deal with it in a way that respects Rule Nos. 1 and 2.</li>
+</ol>
+
+<p>In fact, I’d go so far as to reduce this to one rule: <em>in any analytics problem, you always need to figure out how to make your data look like a big rectangle of numbers.</em></p>
+
+<p>Now is as good a time as any to note that “big rectangle of numbers” has another name: a “matrix.”  Using this language, we can be a bit more formal about our notions of quantitative data.  A set of observations is written as an \(N \times p\) matrix \(\mathbf{X}\).  The usual convention is that each observation lives in its own separate row.  Thus, our matrix \(\mathbf{X}\) describes \(N\) observations of \(p\) variables each.  The observed dependent variable is denoted \(\mathbf{y}\) or \(\mathbf{Y}\), depending on whether there are one or more independent variables.</p>
+
+<p>Consider a couple of examples.  Let’s say you have information about salaries for a number of employees, summarized in the following table:</p>
+
+<p>\[
+\begin{array}{c|c|c|c}
+\mbox{Tenure (Years)} &amp; \mbox{Budget (millions)} &amp; \mbox{Direct Reports} &amp; \mbox{Salary} &#92;&#92;\hline
+10 &amp; 20 &amp; 50 &amp; 120,000 &#92;\<br />
+15 &amp; 20 &amp; 15 &amp; 110,000 &#92;\<br />
+20 &amp; 40 &amp; 70 &amp; 200,000 &#92;\<br />
+10 &amp; 20 &amp; 50 &amp; 140,000
+\end{array}
+\]</p>
+
+<p>A model for salaries based on the explanatory variables of “Tenure,” “Budget,” and “Direct Reports” is trivial to represent in matrix form:</p>
+
+<p>\[\mathbf{X} = \left( \begin{array}{ccc}
+10 &amp; 20 &amp; 50 &#92;\<br />
+15 &amp; 20 &amp; 15 &#92;\<br />
+20 &amp; 40 &amp; 70 &#92;\<br />
+10 &amp; 20 &amp; 50 \end{array} \right), \quad
+\mathbf{y} = \left( \begin{array}{c}
+120,000 &#92;&#92; 110,000 &#92;&#92; 200,000 &#92;&#92; 140,000
+\end{array} \right).\]</p>
+
+<p>So far so good.  But consider another model, this time based only on budget and a new variable called “Location”:</p>
+
+<p>\[
+\begin{array}{c|c|c}
+\mbox{Location} &amp; \mbox{Budget (millions)} &amp; \mbox{Salary} &#92;&#92;\hline
+\mbox{NY} &amp; 20 &amp; 120,000 &#92;\<br />
+\mbox{NJ} &amp; 15 &amp; 110,000 &#92;\<br />
+\mbox{NJ} &amp; 40 &amp; 200,000 &#92;\<br />
+\mbox{NY} &amp; 20 &amp; 140,000
+\end{array}
+\]</p>
+
+<p>This seems to violate our Rule Number 1, as now our model incorporates non-numerical data.  No matter: we just need to find a way to cast the data in a numerical form.  Here, the use of an indicator variable does the trick:</p>
+
+<p>\[
+\begin{array}{c|c|c|c}
+\mbox{In NY?} &amp; \mbox{In NJ?} &amp; \mbox{Budget (millions)} &amp; \mbox{Salary} &#92;&#92;\hline
+1 &amp; 0 &amp; 20 &amp; 120,000 &#92;\<br />
+0 &amp; 1 &amp; 15 &amp; 110,000 &#92;\<br />
+0 &amp; 1 &amp; 40 &amp; 200,000 &#92;\<br />
+1 &amp; 0 &amp; 20 &amp; 140,000
+\end{array}
+\]</p>
+
+<p>This achieves our goal.  When constructing data pipelines with non-numerical data, it is important to think about how best to go about turning that data into a uniform collection of numbers.</p>
+
+<p>One last question: why focus on matrices?  Doing so allows many data operations to be expressed in compact matrix notation, which can aid in reasoning about the underlying mathematics.  It also facilitates geometric reasoning about the distribution of data and the transformations applied to raw data by predictive systems.  This is particularly true in the context of regression, which will be a major topic of our next post.</p>
+
+<p>Basically, if you keep reading, expect to see reasonably extensive use of concepts and notations from linear algebra.  If you need or want a refresher, MIT offers a <a href="http://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/">pretty good online course</a>.</p>
+
+<p>-Drew</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -216,6 +367,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/29/analytics-intro/">A Simplified Model for Analytics (Part I)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2013/07/29/werner-intro/">Introduction</a>
